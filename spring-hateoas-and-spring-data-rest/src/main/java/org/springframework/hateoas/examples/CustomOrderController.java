@@ -47,7 +47,7 @@ public class CustomOrderController {
 		}
 
 		return ResponseEntity.badRequest()
-				.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.PAID_FOR + " is not valid.");
+	.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.PAID_FOR + " is not valid.");
 	}
 
 	@PostMapping("/orders/{id}/cancel")
@@ -62,7 +62,7 @@ public class CustomOrderController {
 		}
 
 		return ResponseEntity.badRequest()
-				.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.CANCELLED + " is not valid.");
+	.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.CANCELLED + " is not valid.");
 	}
 
 	@PostMapping("/orders/{id}/fulfill")
@@ -77,6 +77,6 @@ public class CustomOrderController {
 		}
 
 		return ResponseEntity.badRequest()
-				.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.FULFILLED + " is not valid.");
+	.body("Transitioning from " + order.getOrderStatus() + " to " + OrderStatus.FULFILLED + " is not valid.");
 	}
 }

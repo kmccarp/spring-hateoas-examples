@@ -36,7 +36,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class OrderIntegrationTest {
 
-	@Autowired MockMvc mvc;
+	@Autowired
+	MockMvc mvc;
 
 	@Test
 	void basics() throws Exception {
@@ -44,100 +45,100 @@ public class OrderIntegrationTest {
 		// Core operations provided by Spring Data REST
 
 		this.mvc.perform(get("/api")) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
-				.andExpect(jsonPath("$._links.orders.href", is("http://localhost/api/orders")))
-				.andExpect(jsonPath("$._links.profile.href", is("http://localhost/api/profile")));
+	.andDo(print()) //
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
+	.andExpect(jsonPath("$._links.orders.href", is("http://localhost/api/orders")))
+	.andExpect(jsonPath("$._links.profile.href", is("http://localhost/api/profile")));
 
 		this.mvc.perform(get("/api/orders")).andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
-				.andExpect(jsonPath("$._embedded.orders[0].orderStatus", is("BEING_CREATED")))
-				.andExpect(jsonPath("$._embedded.orders[0].description", is("grande mocha")))
-				.andExpect(jsonPath("$._embedded.orders[0]._links.self.href", is("http://localhost/api/orders/1")))
-				.andExpect(jsonPath("$._embedded.orders[0]._links.order.href", is("http://localhost/api/orders/1")))
-				.andExpect(jsonPath("$._embedded.orders[0]._links.payment.href", is("http://localhost/api/orders/1/pay")))
-				.andExpect(jsonPath("$._embedded.orders[0]._links.cancel.href", is("http://localhost/api/orders/1/cancel")))
-				.andExpect(jsonPath("$._embedded.orders[1].orderStatus", is("BEING_CREATED")))
-				.andExpect(jsonPath("$._embedded.orders[1].description", is("venti hazelnut machiatto")))
-				.andExpect(jsonPath("$._embedded.orders[1]._links.self.href", is("http://localhost/api/orders/2")))
-				.andExpect(jsonPath("$._embedded.orders[1]._links.order.href", is("http://localhost/api/orders/2")))
-				.andExpect(jsonPath("$._embedded.orders[1]._links.payment.href", is("http://localhost/api/orders/2/pay")))
-				.andExpect(jsonPath("$._embedded.orders[1]._links.cancel.href", is("http://localhost/api/orders/2/cancel")))
-				.andExpect(jsonPath("$._links.self.href", is("http://localhost/api/orders")))
-				.andExpect(jsonPath("$._links.profile.href", is("http://localhost/api/profile/orders")));
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
+	.andExpect(jsonPath("$._embedded.orders[0].orderStatus", is("BEING_CREATED")))
+	.andExpect(jsonPath("$._embedded.orders[0].description", is("grande mocha")))
+	.andExpect(jsonPath("$._embedded.orders[0]._links.self.href", is("http://localhost/api/orders/1")))
+	.andExpect(jsonPath("$._embedded.orders[0]._links.order.href", is("http://localhost/api/orders/1")))
+	.andExpect(jsonPath("$._embedded.orders[0]._links.payment.href", is("http://localhost/api/orders/1/pay")))
+	.andExpect(jsonPath("$._embedded.orders[0]._links.cancel.href", is("http://localhost/api/orders/1/cancel")))
+	.andExpect(jsonPath("$._embedded.orders[1].orderStatus", is("BEING_CREATED")))
+	.andExpect(jsonPath("$._embedded.orders[1].description", is("venti hazelnut machiatto")))
+	.andExpect(jsonPath("$._embedded.orders[1]._links.self.href", is("http://localhost/api/orders/2")))
+	.andExpect(jsonPath("$._embedded.orders[1]._links.order.href", is("http://localhost/api/orders/2")))
+	.andExpect(jsonPath("$._embedded.orders[1]._links.payment.href", is("http://localhost/api/orders/2/pay")))
+	.andExpect(jsonPath("$._embedded.orders[1]._links.cancel.href", is("http://localhost/api/orders/2/cancel")))
+	.andExpect(jsonPath("$._links.self.href", is("http://localhost/api/orders")))
+	.andExpect(jsonPath("$._links.profile.href", is("http://localhost/api/profile/orders")));
 
 		// Fulfilling an unpaid-for order should fail.
 
 		this.mvc.perform(post("/api/orders/1/fulfill")) //
-				.andDo(print()) //
-				.andExpect(status().is4xxClientError()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(content().string("\"Transitioning from BEING_CREATED to FULFILLED is not valid.\""));
+	.andDo(print()) //
+	.andExpect(status().is4xxClientError()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(content().string("\"Transitioning from BEING_CREATED to FULFILLED is not valid.\""));
 
 		// Pay for the order.
 
 		this.mvc.perform(post("/api/orders/1/pay")) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(jsonPath("$.id", is(1))) //
-				.andExpect(jsonPath("$.orderStatus", is("PAID_FOR")));
+	.andDo(print()) //
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(jsonPath("$.id", is(1))) //
+	.andExpect(jsonPath("$.orderStatus", is("PAID_FOR")));
 
 		// Paying for an already paid-for order should fail.
 
 		this.mvc.perform(post("/api/orders/1/pay")) //
-				.andDo(print()) //
-				.andExpect(status().is4xxClientError()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(content().string("\"Transitioning from PAID_FOR to PAID_FOR is not valid.\""));
+	.andDo(print()) //
+	.andExpect(status().is4xxClientError()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(content().string("\"Transitioning from PAID_FOR to PAID_FOR is not valid.\""));
 
 		// Cancelling a paid-for order should fail.
 
 		this.mvc.perform(post("/api/orders/1/cancel")) //
-				.andDo(print()) //
-				.andExpect(status().is4xxClientError()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(content().string("\"Transitioning from PAID_FOR to CANCELLED is not valid.\""));
+	.andDo(print()) //
+	.andExpect(status().is4xxClientError()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(content().string("\"Transitioning from PAID_FOR to CANCELLED is not valid.\""));
 
 		// Verify a paid-for order now shows links to fulfill.
 
 		this.mvc.perform(get("/api/orders/1")) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
-				.andExpect(jsonPath("$.orderStatus", is("PAID_FOR"))) //
-				.andExpect(jsonPath("$.description", is("grande mocha"))) //
-				.andExpect(jsonPath("$._links.self.href", is("http://localhost/api/orders/1")))
-				.andExpect(jsonPath("$._links.order.href", is("http://localhost/api/orders/1")))
-				.andExpect(jsonPath("$._links.fulfill.href", is("http://localhost/api/orders/1/fulfill")));
+	.andDo(print()) //
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaTypes.HAL_JSON)) //
+	.andExpect(jsonPath("$.orderStatus", is("PAID_FOR"))) //
+	.andExpect(jsonPath("$.description", is("grande mocha"))) //
+	.andExpect(jsonPath("$._links.self.href", is("http://localhost/api/orders/1")))
+	.andExpect(jsonPath("$._links.order.href", is("http://localhost/api/orders/1")))
+	.andExpect(jsonPath("$._links.fulfill.href", is("http://localhost/api/orders/1/fulfill")));
 
 		// Fulfill the order.
 
 		this.mvc.perform(post("/api/orders/1/fulfill")) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(jsonPath("$.orderStatus", is("FULFILLED"))) //
-				.andExpect(jsonPath("$.description", is("grande mocha")));
+	.andDo(print()) //
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(jsonPath("$.orderStatus", is("FULFILLED"))) //
+	.andExpect(jsonPath("$.description", is("grande mocha")));
 
 		// Cancelling a fulfilled order should fail.
 
 		this.mvc.perform(post("/api/orders/1/cancel")) //
-				.andDo(print()) //
-				.andExpect(status().is4xxClientError()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(content().string("\"Transitioning from FULFILLED to CANCELLED is not valid.\""));
+	.andDo(print()) //
+	.andExpect(status().is4xxClientError()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(content().string("\"Transitioning from FULFILLED to CANCELLED is not valid.\""));
 
 		// Cancel an order.
 		
 		this.mvc.perform(post("/api/orders/2/cancel")) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-				.andExpect(jsonPath("$.orderStatus", is("CANCELLED"))) //
-				.andExpect(jsonPath("$.description", is("venti hazelnut machiatto")));
+	.andDo(print()) //
+	.andExpect(status().isOk()) //
+	.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+	.andExpect(jsonPath("$.orderStatus", is("CANCELLED"))) //
+	.andExpect(jsonPath("$.description", is("venti hazelnut machiatto")));
 	}
 
 }

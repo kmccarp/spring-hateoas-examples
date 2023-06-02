@@ -37,7 +37,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NoArgsConstructor
 class Manager {
 
-	@Id @GeneratedValue private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String name;
 
 	/**

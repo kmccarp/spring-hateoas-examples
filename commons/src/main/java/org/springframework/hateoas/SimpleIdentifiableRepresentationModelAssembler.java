@@ -46,17 +46,21 @@ public class SimpleIdentifiableRepresentationModelAssembler<T> implements Simple
 	/**
 	 * A {@link LinkRelationProvider} to look up names of links as options for resource paths.
 	 */
-	@Getter private final LinkRelationProvider relProvider;
+	@Getter
+	private final LinkRelationProvider relProvider;
 
 	/**
 	 * A {@link Class} depicting the object's type.
 	 */
-	@Getter private final Class<?> resourceType;
+	@Getter
+	private final Class<?> resourceType;
 
 	/**
 	 * Default base path as empty.
 	 */
-	@Getter @Setter private String basePath = "";
+	@Getter
+	@Setter
+	private String basePath = "";
 
 	/**
 	 * Default a assembler based on Spring MVC controller, resource type, and {@link LinkRelationProvider}. With this
@@ -74,7 +78,7 @@ public class SimpleIdentifiableRepresentationModelAssembler<T> implements Simple
 		// Find the "T" type contained in "T extends Identifiable<?>", e.g.
 		// SimpleIdentifiableRepresentationModelAssembler<User> -> User
 		this.resourceType = GenericTypeResolver.resolveTypeArgument(this.getClass(),
-				SimpleIdentifiableRepresentationModelAssembler.class);
+	SimpleIdentifiableRepresentationModelAssembler.class);
 	}
 
 	/**

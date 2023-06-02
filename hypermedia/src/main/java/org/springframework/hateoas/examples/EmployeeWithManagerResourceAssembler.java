@@ -37,7 +37,7 @@ class EmployeeWithManagerResourceAssembler implements SimpleRepresentationModelA
 	public void addLinks(EntityModel<EmployeeWithManager> resource) {
 
 		resource.add(
-				linkTo(methodOn(EmployeeController.class).findDetailedEmployee(resource.getContent().getId())).withSelfRel());
+	linkTo(methodOn(EmployeeController.class).findDetailedEmployee(resource.getContent().getId())).withSelfRel());
 		resource.add(linkTo(methodOn(EmployeeController.class).findOne(resource.getContent().getId())).withRel("summary"));
 		resource.add(linkTo(methodOn(EmployeeController.class).findAllDetailedEmployees()).withRel("detailedEmployees"));
 	}

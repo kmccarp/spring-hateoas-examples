@@ -50,7 +50,7 @@ class EmployeeController {
 	public ResponseEntity<CollectionModel<EntityModel<Employee>>> findAll() {
 
 		return ResponseEntity.ok( //
-				this.assembler.toCollectionModel(this.repository.findAll()));
+	this.assembler.toCollectionModel(this.repository.findAll()));
 
 	}
 
@@ -65,9 +65,9 @@ class EmployeeController {
 	public ResponseEntity<EntityModel<Employee>> findOne(@PathVariable long id) {
 
 		return this.repository.findById(id) //
-				.map(this.assembler::toModel) //
-				.map(ResponseEntity::ok) //
-				.orElse(ResponseEntity.notFound().build());
+	.map(this.assembler::toModel) //
+	.map(ResponseEntity::ok) //
+	.orElse(ResponseEntity.notFound().build());
 	}
 
 }

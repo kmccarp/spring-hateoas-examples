@@ -39,7 +39,7 @@ class EmployeeController {
 	private final EmployeeWithManagerResourceAssembler employeeWithManagerResourceAssembler;
 
 	EmployeeController(EmployeeRepository repository, EmployeeRepresentationModelAssembler assembler,
-			EmployeeWithManagerResourceAssembler employeeWithManagerResourceAssembler) {
+EmployeeWithManagerResourceAssembler employeeWithManagerResourceAssembler) {
 
 		this.repository = repository;
 		this.assembler = assembler;
@@ -69,9 +69,9 @@ class EmployeeController {
 	public ResponseEntity<EntityModel<Employee>> findOne(@PathVariable long id) {
 
 		return repository.findById(id) //
-				.map(assembler::toModel) //
-				.map(ResponseEntity::ok) //
-				.orElse(ResponseEntity.notFound().build());
+	.map(assembler::toModel) //
+	.map(ResponseEntity::ok) //
+	.orElse(ResponseEntity.notFound().build());
 	}
 
 	/**
@@ -84,10 +84,10 @@ class EmployeeController {
 	public ResponseEntity<CollectionModel<EntityModel<Employee>>> findEmployees(@PathVariable long id) {
 
 		CollectionModel<EntityModel<Employee>> collectionModel = assembler
-				.toCollectionModel(repository.findByManagerId(id));
+	.toCollectionModel(repository.findByManagerId(id));
 
 		Links newLinks = collectionModel.getLinks().merge(Links.MergeMode.REPLACE_BY_REL,
-				linkTo(methodOn(EmployeeController.class).findEmployees(id)).withSelfRel());
+	linkTo(methodOn(EmployeeController.class).findEmployees(id)).withSelfRel());
 
 		return ResponseEntity.ok(CollectionModel.of(collectionModel.getContent(), newLinks));
 	}
@@ -96,19 +96,17 @@ class EmployeeController {
 	public ResponseEntity<CollectionModel<EntityModel<EmployeeWithManager>>> findAllDetailedEmployees() {
 
 		return ResponseEntity.ok( //
-				employeeWithManagerResourceAssembler.toCollectionModel( //
-						StreamSupport.stream(repository.findAll().spliterator(), false) //
-								.map(EmployeeWithManager::new) //
-								.collect(Collectors.toList())));
+	employeeWithManagerResourceAssembler.toCollectionModel( //
+StreamSupport.stream(repository.findAll().spliterator(), false) //.map(EmployeeWithManager::new) //.collect(Collectors.toList())));
 	}
 
 	@GetMapping("/employees/{id}/detailed")
 	public ResponseEntity<EntityModel<EmployeeWithManager>> findDetailedEmployee(@PathVariable Long id) {
 
 		return repository.findById(id) //
-				.map(EmployeeWithManager::new) //
-				.map(employeeWithManagerResourceAssembler::toModel) //
-				.map(ResponseEntity::ok) //
-				.orElse(ResponseEntity.notFound().build());
+	.map(EmployeeWithManager::new) //
+	.map(employeeWithManagerResourceAssembler::toModel) //
+	.map(ResponseEntity::ok) //
+	.orElse(ResponseEntity.notFound().build());
 	}
 }

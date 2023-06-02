@@ -48,8 +48,8 @@ class EmployeeController {
 		RepresentationModel rootResource = new RepresentationModel();
 
 		rootResource.add( //
-				linkTo(methodOn(EmployeeController.class).root()).withSelfRel(), //
-				linkTo(methodOn(EmployeeController.class).findAll()).withRel("employees"));
+	linkTo(methodOn(EmployeeController.class).root()).withSelfRel(), //
+	linkTo(methodOn(EmployeeController.class).findAll()).withRel("employees"));
 
 		return rootResource;
 	}
@@ -65,18 +65,18 @@ class EmployeeController {
 		Employee savedEmployee = repository.save(employee);
 
 		return savedEmployee.getId() //
-				.map(id -> ResponseEntity.created( //
-						linkTo(methodOn(EmployeeController.class).findOne(id)).toUri()).body(assembler.toModel(savedEmployee)))
-				.orElse(ResponseEntity.notFound().build());
+	.map(id -> ResponseEntity.created( //
+linkTo(methodOn(EmployeeController.class).findOne(id)).toUri()).body(assembler.toModel(savedEmployee)))
+	.orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<EntityModel<Employee>> findOne(@PathVariable Long id) {
 
 		return repository.findById(id) //
-				.map(assembler::toModel) //
-				.map(ResponseEntity::ok) //
-				.orElse(ResponseEntity.notFound().build());
+	.map(assembler::toModel) //
+	.map(ResponseEntity::ok) //
+	.orElse(ResponseEntity.notFound().build());
 	}
 
 }

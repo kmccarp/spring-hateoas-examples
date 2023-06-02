@@ -46,7 +46,7 @@ class ManagerController {
 	ResponseEntity<CollectionModel<EntityModel<Manager>>> findAll() {
 
 		return ResponseEntity.ok( //
-				assembler.toCollectionModel(repository.findAll()));
+	assembler.toCollectionModel(repository.findAll()));
 
 	}
 
@@ -61,9 +61,9 @@ class ManagerController {
 	ResponseEntity<EntityModel<Manager>> findOne(@PathVariable long id) {
 
 		return repository.findById(id) //
-				.map(assembler::toModel) //
-				.map(ResponseEntity::ok) //
-				.orElse(ResponseEntity.notFound().build());
+	.map(assembler::toModel) //
+	.map(ResponseEntity::ok) //
+	.orElse(ResponseEntity.notFound().build());
 	}
 
 	/**
@@ -76,6 +76,6 @@ class ManagerController {
 	ResponseEntity<EntityModel<Manager>> findManager(@PathVariable long id) {
 
 		return ResponseEntity.ok( //
-				assembler.toModel(repository.findByEmployeesId(id)));
+	assembler.toModel(repository.findByEmployeesId(id)));
 	}
 }

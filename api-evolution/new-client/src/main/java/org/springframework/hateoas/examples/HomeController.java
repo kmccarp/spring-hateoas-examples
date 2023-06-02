@@ -63,8 +63,9 @@ public class HomeController {
 		Traverson client = new Traverson(new URI(REMOTE_SERVICE_ROOT_URI), MediaTypes.HAL_JSON);
 
 		CollectionModel<EntityModel<Employee>> employees = client //
-				.follow("employees") //
-				.toObject(new CollectionModelType<EntityModel<Employee>>() {});
+	.follow("employees") //
+	.toObject(new CollectionModelType<EntityModel<Employee>>() {
+	});
 
 		model.addAttribute("employee", new Employee());
 		model.addAttribute("employees", employees);

@@ -54,25 +54,25 @@ public class OrderProcessor implements RepresentationModelProcessor<EntityModel<
 		// If PAID_FOR is valid, add a link to the `pay()` method
 		if (valid(model.getContent().getOrderStatus(), OrderStatus.PAID_FOR)) {
 			model.add(applyBasePath( //
-					linkTo(controller.pay(model.getContent().getId())) //
-							.withRel(IanaLinkRelations.PAYMENT), //
-					basePath));
+		linkTo(controller.pay(model.getContent().getId())) //
+	.withRel(IanaLinkRelations.PAYMENT), //
+		basePath));
 		}
 
 		// If CANCELLED is valid, add a link to the `cancel()` method
 		if (valid(model.getContent().getOrderStatus(), OrderStatus.CANCELLED)) {
 			model.add(applyBasePath( //
-					linkTo(controller.cancel(model.getContent().getId())) //
-							.withRel(LinkRelation.of("cancel")), //
-					basePath));
+		linkTo(controller.cancel(model.getContent().getId())) //
+	.withRel(LinkRelation.of("cancel")), //
+		basePath));
 		}
 
 		// If FULFILLED is valid, add a link to the `fulfill()` method
 		if (valid(model.getContent().getOrderStatus(), OrderStatus.FULFILLED)) {
 			model.add(applyBasePath( //
-					linkTo(controller.fulfill(model.getContent().getId())) //
-							.withRel(LinkRelation.of("fulfill")), //
-					basePath));
+		linkTo(controller.fulfill(model.getContent().getId())) //
+	.withRel(LinkRelation.of("fulfill")), //
+		basePath));
 		}
 
 		return model;
@@ -92,7 +92,7 @@ public class OrderProcessor implements RepresentationModelProcessor<EntityModel<
 		URI newUri = null;
 		try {
 			newUri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), //
-					uri.getPort(), basePath + uri.getPath(), uri.getQuery(), uri.getFragment());
+		uri.getPort(), basePath + uri.getPath(), uri.getQuery(), uri.getFragment());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
